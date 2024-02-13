@@ -20,6 +20,7 @@ import io.micronaut.core.convert.ConversionService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.annotation.Nullable;
 
 /**
  * Implementation of {@link MutableConvertibleMultiValues} that operates against a backing {@link java.util.LinkedHashMap}.
@@ -59,7 +60,7 @@ public class MutableConvertibleMultiValuesMap<V> extends ConvertibleMultiValuesM
     }
 
     @Override
-    public MutableConvertibleValues<List<V>> put(CharSequence key, List<V> value) {
+    public MutableConvertibleValues<List<V>> put(CharSequence key, @Nullable List<V> value) {
         if (value != null) {
             this.values.put(key, value);
         }

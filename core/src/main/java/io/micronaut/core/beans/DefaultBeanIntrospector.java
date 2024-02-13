@@ -31,6 +31,7 @@ import io.micronaut.core.io.service.SoftServiceLoader;
 import io.micronaut.core.reflect.ClassUtils;
 import io.micronaut.core.util.ArgumentUtils;
 import org.slf4j.Logger;
+import javax.annotation.Nullable;
 
 /**
  * Default implementation of the {@link BeanIntrospector} interface that uses service loader to discovery introspections.
@@ -44,7 +45,7 @@ class DefaultBeanIntrospector implements BeanIntrospector {
 
     private static final Logger LOG = ClassUtils.getLogger(DefaultBeanIntrospector.class);
 
-    private Map<String, BeanIntrospectionReference<Object>> introspectionMap;
+    @Nullable private Map<String, BeanIntrospectionReference<Object>> introspectionMap;
     private final ClassLoader classLoader;
 
     DefaultBeanIntrospector() {

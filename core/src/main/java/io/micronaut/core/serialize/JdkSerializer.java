@@ -27,6 +27,7 @@ import java.io.ObjectOutputStream;
 import java.io.ObjectStreamClass;
 import java.io.OutputStream;
 import java.util.Optional;
+import javax.annotation.Nullable;
 
 /**
  * A {@link ObjectSerializer} that uses JDK serialization.
@@ -53,7 +54,7 @@ public class JdkSerializer implements ObjectSerializer {
     }
 
     @Override
-    public void serialize(Object object, OutputStream outputStream) throws SerializationException {
+    public void serialize(@Nullable Object object, OutputStream outputStream) throws SerializationException {
         try {
             try (ObjectOutputStream objectOut = createObjectOutput(outputStream)) {
                 objectOut.writeObject(object);
@@ -65,7 +66,7 @@ public class JdkSerializer implements ObjectSerializer {
     }
 
     @Override
-    public <T> Optional<T> deserialize(InputStream inputStream, Class<T> requiredType) throws SerializationException {
+    public <T> Optional<T> deserialize(@Nullable InputStream inputStream, Class<T> requiredType) throws SerializationException {
         try {
             try (ObjectInputStream objectIn = createObjectInput(inputStream, requiredType)) {
                 try {
@@ -84,7 +85,7 @@ public class JdkSerializer implements ObjectSerializer {
     }
 
     @Override
-    public <T> Optional<T> deserialize(InputStream inputStream, Argument<T> requiredType) throws SerializationException {
+    public <T> Optional<T> deserialize(@Nullable InputStream inputStream, Argument<T> requiredType) throws SerializationException {
         try {
             try (ObjectInputStream objectIn = createObjectInput(inputStream, requiredType.getType())) {
                 try {
@@ -117,7 +118,7 @@ public class JdkSerializer implements ObjectSerializer {
      * @return A {@link ObjectOutputStream}
      * @throws IOException if there is an error
      */
-    protected ObjectInputStream createObjectInput(InputStream inputStream, Class<?> requiredType) throws IOException {
+    protected ObjectInputStream createObjectInput(@Nullable InputStream inputStream, Class<?> requiredType) throws IOException {
         return new ObjectInputStream(inputStream) {
             @Override
             protected Class<?> resolveClass(ObjectStreamClass desc) throws IOException, ClassNotFoundException {

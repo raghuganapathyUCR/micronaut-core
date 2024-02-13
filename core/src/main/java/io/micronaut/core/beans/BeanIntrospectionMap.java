@@ -24,6 +24,7 @@ import io.micronaut.core.util.ObjectUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 /**
  * An implementation of {@link BeanMap} that uses a backing {@link BeanIntrospection}.
@@ -93,7 +94,7 @@ final class BeanIntrospectionMap<T> implements BeanMap<T> {
         return values().contains(value);
     }
 
-    @Override
+    @Nullable @Override
     public Object get(Object key) {
         if (key == null) {
             return null;
@@ -101,7 +102,7 @@ final class BeanIntrospectionMap<T> implements BeanMap<T> {
         return beanIntrospection.getProperty(key.toString()).map(bp -> bp.get(bean)).orElse(null);
     }
 
-    @Override
+    @Nullable @Override
     public Object put(String key, Object value) {
         if (key == null) {
             return null;
@@ -153,12 +154,12 @@ final class BeanIntrospectionMap<T> implements BeanMap<T> {
                 return key;
             }
 
-            @Override
+            @Nullable @Override
             public Object getValue() {
                 return get(key);
             }
 
-            @Override
+            @Nullable @Override
             public Object setValue(Object value) {
                 return put(key, value);
             }

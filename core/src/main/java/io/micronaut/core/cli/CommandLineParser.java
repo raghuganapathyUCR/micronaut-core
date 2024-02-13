@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
+import javax.annotation.Nullable;
 
 /**
  * Command line parser that parses arguments to the command line. Written as a
@@ -41,7 +42,7 @@ class CommandLineParser implements CommandLine.Builder<CommandLineParser> {
 
     private Map<String, Option> declaredOptions = new HashMap<>();
     private int longestOptionNameLength = 0;
-    private String usageMessage;
+    @Nullable private String usageMessage;
 
     /**
      * Adds a declared option.
@@ -150,7 +151,7 @@ class CommandLineParser implements CommandLine.Builder<CommandLineParser> {
      * @param arg arg
      * @return argument processed
      */
-    protected String processOption(DefaultCommandLine cl, String arg) {
+    @Nullable protected String processOption(DefaultCommandLine cl, String arg) {
         if (arg.length() < 2) {
             return null;
         }

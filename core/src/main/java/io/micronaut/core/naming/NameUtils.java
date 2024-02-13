@@ -23,6 +23,7 @@ import io.micronaut.core.util.StringUtils;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.Nullable;
 
 /**
  * <p>Naming convention utilities.</p>

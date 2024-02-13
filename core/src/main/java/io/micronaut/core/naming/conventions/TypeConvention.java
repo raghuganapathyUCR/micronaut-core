@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.Experimental;
 import io.micronaut.core.naming.NameUtils;
 
 import java.util.Locale;
+import javax.annotation.Nullable;
 
 /**
  * <p>Common conventions for types</p>.

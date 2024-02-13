@@ -144,7 +144,7 @@ public final class ArrayUtils {
      * @param array The array
      * @return True if it is
      */
-    public static boolean isEmpty(Object[] array) {
+    public static boolean isEmpty(@Nullable Object[] array) {
         return array == null || array.length == 0;
     }
 
@@ -154,7 +154,7 @@ public final class ArrayUtils {
      * @param array The array
      * @return True if it is
      */
-    public static boolean isNotEmpty(Object[] array) {
+    public static boolean isNotEmpty(@Nullable Object[] array) {
         return !isEmpty(array);
     }
 

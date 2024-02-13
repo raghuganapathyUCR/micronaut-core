@@ -40,5 +40,5 @@ public sealed interface DelayedExecutionFlow<T> extends ExecutionFlow<T> permits
      *
      * @param exc The exception
      */
-    void completeExceptionally(Throwable exc);
+    void completeExceptionally(@Nullable Throwable exc);
 }

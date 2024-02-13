@@ -17,6 +17,7 @@ package io.micronaut.core.annotation;
 
 import java.lang.annotation.Annotation;
 import java.util.Optional;
+import javax.annotation.Nullable;
 
 /**
  * An interface for a type that provides {@link AnnotationMetadata}.
@@ -36,7 +37,7 @@ public interface AnnotationMetadataProvider extends AnnotationSource {
         return AnnotationMetadata.EMPTY_METADATA;
     }
 
-    @Override
+    @Nullable @Override
     default <T extends Annotation> T synthesize(Class<T> annotationClass) {
         return getAnnotationMetadata().synthesize(annotationClass);
     }
@@ -61,7 +62,7 @@ public interface AnnotationMetadataProvider extends AnnotationSource {
         return getAnnotationMetadata().isDeclaredAnnotationPresent(annotationClass);
     }
 
-    @Override
+    @Nullable @Override
     default <T extends Annotation> T synthesizeDeclared(Class<T> annotationClass) {
         return getAnnotationMetadata().synthesizeDeclared(annotationClass);
     }

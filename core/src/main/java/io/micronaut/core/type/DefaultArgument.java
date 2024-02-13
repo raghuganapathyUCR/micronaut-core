@@ -67,13 +67,13 @@ public class DefaultArgument<T> implements Argument<T>, ArgumentCoercible<T> {
     );
 
     private final Class<T> type;
-    private final String name;
+    @Nullable private final String name;
     private final Map<String, Argument<?>> typeParameters;
     private final Argument<?>[] typeParameterArray;
     private final AnnotationMetadata annotationMetadata;
     private final boolean isTypeVar;
-    private String namePrecalculated;
-    private Boolean reactive;
+    @Nullable private String namePrecalculated;
+    @Nullable private Boolean reactive;
 
     /**
      * @param type               The type
@@ -81,7 +81,7 @@ public class DefaultArgument<T> implements Argument<T>, ArgumentCoercible<T> {
      * @param annotationMetadata The annotation metadata
      * @param genericTypes       The generic types
      */
-    public DefaultArgument(Class<T> type, String name, AnnotationMetadata annotationMetadata, Argument<?>... genericTypes) {
+    public DefaultArgument(Class<T> type, @Nullable String name, @Nullable AnnotationMetadata annotationMetadata, @Nullable Argument<?>... genericTypes) {
         this(type,
              name,
              annotationMetadata,
@@ -95,7 +95,7 @@ public class DefaultArgument<T> implements Argument<T>, ArgumentCoercible<T> {
      * @param annotationMetadata The annotation metadata
      * @param genericTypes       The generic types
      */
-    public DefaultArgument(Class<T> type, AnnotationMetadata annotationMetadata, Argument<?>... genericTypes) {
+    public DefaultArgument(Class<T> type, @Nullable AnnotationMetadata annotationMetadata, @Nullable Argument<?>... genericTypes) {
         this(type,
                 null,
                 annotationMetadata,
@@ -154,7 +154,7 @@ public class DefaultArgument<T> implements Argument<T>, ArgumentCoercible<T> {
      * @param name               The name
      * @param annotationMetadata The annotation metadata
      */
-    public DefaultArgument(Type type, String name, AnnotationMetadata annotationMetadata) {
+    public DefaultArgument(@Nullable Type type, @Nullable String name, AnnotationMetadata annotationMetadata) {
         this.annotationMetadata = annotationMetadata != null ? annotationMetadata : AnnotationMetadata.EMPTY_METADATA;
         if (type == null) {
             type = getClass().getGenericSuperclass();

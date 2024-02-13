@@ -18,6 +18,7 @@ package io.micronaut.core.cli;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.annotation.Nullable;
 
 /**
  * Represents the parsed command line options.
@@ -54,12 +55,12 @@ public interface CommandLine {
      * @param name The option
      * @return The value
      */
-    Object optionValue(String name);
+    @Nullable Object optionValue(String name);
 
     /**
      * @return The last specified option
      */
-    Map.Entry<String, Object> lastOption();
+    @Nullable Map.Entry<String, Object> lastOption();
 
     /**
      * @return The remaining args as one big string

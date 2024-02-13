@@ -342,8 +342,8 @@ final class ServiceScanner<S> {
     private final class ServiceInstanceLoader extends RecursiveActionValuesCollector<S> {
 
         private final String className;
-        private S result;
-        private Throwable throwable;
+        @Nullable private S result;
+        @Nullable private Throwable throwable;
 
         public ServiceInstanceLoader(String className) {
             this.className = className;

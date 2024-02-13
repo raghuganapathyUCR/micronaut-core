@@ -110,7 +110,7 @@ public interface ConversionContext extends AnnotationMetadataProvider, TypeVaria
         ConversionContext childContext = ConversionContext.of(argument);
         ConversionContext thisContext = this;
         return new DefaultArgumentConversionContext(argument, thisContext.getLocale(), thisContext.getCharset()) {
-            @Override
+            @Nullable @Override
             public <T extends Annotation> T synthesize(Class<T> annotationClass) {
                 T annotation = childContext.synthesize(annotationClass);
                 if (annotation == null) {

@@ -24,6 +24,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.annotation.Nullable;
 
 /**
  * Implementation of the {@link CommandLine} interface.
@@ -70,7 +71,7 @@ class DefaultCommandLine implements CommandLine {
         return declaredOptions.containsKey(new Option(name, null)) || undeclaredOptions.containsKey(name);
     }
 
-    @Override
+    @Nullable @Override
     public Object optionValue(String name) {
         Option opt = new Option(name, null);
         if (declaredOptions.containsKey(opt)) {
@@ -87,7 +88,7 @@ class DefaultCommandLine implements CommandLine {
         return remainingArgsToString(" ", false);
     }
 
-    @Override
+    @Nullable @Override
     public Map.Entry<String, Object> lastOption() {
         final Iterator<Map.Entry<String, Object>> i = undeclaredOptions.entrySet().iterator();
         while (i.hasNext()) {

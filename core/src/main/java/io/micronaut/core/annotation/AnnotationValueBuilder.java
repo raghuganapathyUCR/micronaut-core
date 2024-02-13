@@ -27,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.annotation.Nullable;
 
 /**
  * A build for annotation values.
@@ -84,7 +85,7 @@ public class AnnotationValueBuilder<T extends Annotation> {
      * @param retentionPolicy The retention policy
      */
     @Internal
-    AnnotationValueBuilder(AnnotationValue<T> value, RetentionPolicy retentionPolicy) {
+    AnnotationValueBuilder(AnnotationValue<T> value, @Nullable RetentionPolicy retentionPolicy) {
         this.annotationName = value.getAnnotationName();
         this.values.putAll(value.getValues());
         this.defaultValues = value.getDefaultValues();

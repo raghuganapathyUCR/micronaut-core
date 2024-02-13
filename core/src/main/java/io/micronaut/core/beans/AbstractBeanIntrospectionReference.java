@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.Internal;
 import io.micronaut.core.annotation.UsedByGeneratedCode;
 
 import io.micronaut.core.annotation.NonNull;
+import javax.annotation.Nullable;
 
 
 /**
@@ -32,7 +33,7 @@ import io.micronaut.core.annotation.NonNull;
 @UsedByGeneratedCode
 public abstract class AbstractBeanIntrospectionReference<T> implements BeanIntrospectionReference<T> {
 
-    private Boolean present = null;
+    @Nullable private Boolean present = null;
 
     /**
      * Default constructor.

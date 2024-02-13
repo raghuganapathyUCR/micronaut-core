@@ -31,6 +31,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.Nullable;
 
 /**
  * Internal utility methods for annotations. For Internal and framework use only. Do not use in application code.
@@ -94,7 +95,7 @@ public class AnnotationUtil {
      * An empty re-usable element.
      */
     public static final AnnotatedElement EMPTY_ANNOTATED_ELEMENT = new AnnotatedElement() {
-        @Override
+        @Nullable @Override
         public <T extends Annotation> T getAnnotation(Class<T> annotationClass) {
             return null;
         }
@@ -711,7 +712,7 @@ public class AnnotationUtil {
      * @param o2 Another object
      * @return Whether both objects are equal
      */
-    public static boolean areEqual(Object o1, Object o2) {
+    public static boolean areEqual(Object o1, @Nullable Object o2) {
         return
                 !o1.getClass().isArray() ? o1.equals(o2) :
                         o1.getClass() == boolean[].class ? Arrays.equals((boolean[]) o1, (boolean[]) o2) :

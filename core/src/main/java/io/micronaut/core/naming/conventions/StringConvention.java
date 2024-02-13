@@ -18,6 +18,7 @@ package io.micronaut.core.naming.conventions;
 import io.micronaut.core.naming.NameUtils;
 
 import java.util.Locale;
+import javax.annotation.Nullable;
 
 /**
  * An enum representing different conventions.

@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import javax.annotation.Nullable;
 
 /**
  * Linked list implementation of the {@link Deque} interface where the link
@@ -59,14 +60,14 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
      * Invariant: (first == null && last == null) ||
      *            (first.prev == null)
      */
-    E first;
+    @Nullable E first;
 
     /**
      * Pointer to last node.
      * Invariant: (first == null && last == null) ||
      *            (last.next == null)
      */
-    E last;
+    @Nullable E last;
 
     /**
      * Links the element to the front of the deque so that it becomes the first
@@ -243,34 +244,34 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
         }
     }
 
-    @Override
+    @Nullable @Override
     public E peek() {
         return peekFirst();
     }
 
-    @Override
+    @Nullable @Override
     public E peekFirst() {
         return first;
     }
 
-    @Override
+    @Nullable @Override
     public E peekLast() {
         return last;
     }
 
-    @Override
+    @Nullable @Override
     public E getFirst() {
         checkNotEmpty();
         return peekFirst();
     }
 
-    @Override
+    @Nullable @Override
     public E getLast() {
         checkNotEmpty();
         return peekLast();
     }
 
-    @Override
+    @Nullable @Override
     public E element() {
         return getFirst();
     }
@@ -317,22 +318,22 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
         }
     }
 
-    @Override
+    @Nullable @Override
     public E poll() {
         return pollFirst();
     }
 
-    @Override
+    @Nullable @Override
     public E pollFirst() {
         return isEmpty() ? null : unlinkFirst();
     }
 
-    @Override
+    @Nullable @Override
     public E pollLast() {
         return isEmpty() ? null : unlinkLast();
     }
 
-    @Override
+    @Nullable @Override
     public E remove() {
         return removeFirst();
     }
@@ -343,7 +344,7 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
         return (o instanceof Linked<?>) && remove((E) o);
     }
 
-    @Override
+    @Nullable @Override
     public E removeFirst() {
         checkNotEmpty();
         return pollFirst();
@@ -354,7 +355,7 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
         return remove(o);
     }
 
-    @Override
+    @Nullable @Override
     public E removeLast() {
         checkNotEmpty();
         return pollLast();
@@ -379,7 +380,7 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
         addFirst(e);
     }
 
-    @Override
+    @Nullable @Override
     public E pop() {
         return removeFirst();
     }
@@ -387,7 +388,7 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
     @Override
     public Iterator<E> iterator() {
         return new AbstractLinkedIterator(first) {
-            @Override E computeNext() {
+            @Nullable @Override E computeNext() {
                 return cursor.getNext();
             }
         };
@@ -396,7 +397,7 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
     @Override
     public Iterator<E> descendingIterator() {
         return new AbstractLinkedIterator(last) {
-            @Override E computeNext() {
+            @Nullable @Override E computeNext() {
                 return cursor.getPrevious();
             }
         };
@@ -412,14 +413,14 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
      * Abstract linked iterator impl.
      */
     private abstract class AbstractLinkedIterator implements Iterator<E> {
-        E cursor;
+        @Nullable E cursor;
 
         /**
          * Creates an iterator that can can traverse the deque.
          *
          * @param start the initial element to begin traversal from
          */
-        AbstractLinkedIterator(E start) {
+        AbstractLinkedIterator(@Nullable E start) {
             cursor = start;
         }
 
@@ -428,7 +429,7 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
             return (cursor != null);
         }
 
-        @Override
+        @Nullable @Override
         public E next() {
             if (!hasNext()) {
                 throw new NoSuchElementException();
@@ -447,7 +448,7 @@ final class LinkedDeque<E extends Linked<E>> extends AbstractCollection<E> imple
          * Retrieves the next element to traverse to or {@code null} if there are
          * no more elements.
          */
-        abstract E computeNext();
+        @Nullable abstract E computeNext();
     }
 }
 
@@ -464,14 +465,14 @@ interface Linked<T extends Linked<T>> {
      *
      * @return The previous
      */
-    T getPrevious();
+    @Nullable T getPrevious();
 
     /**
      * Sets the previous element or {@code null} if there is no link.
      *
      * @param prev The previous
      **/
-    void setPrevious(T prev);
+    void setPrevious(@Nullable T prev);
 
     /**
      * Retrieves the next element or {@code null} if either the element is
@@ -479,13 +480,13 @@ interface Linked<T extends Linked<T>> {
      *
      * @return The next
      */
-    T getNext();
+    @Nullable T getNext();
 
     /**
      * Sets the next element or {@code null} if there is no link.
      *
      * @param next Sets the next
      **/
-    void setNext(T next);
+    void setNext(@Nullable T next);
 }
 

@@ -17,6 +17,7 @@ package io.micronaut.core.propagation;
 
 import io.micronaut.core.annotation.Internal;
 import io.netty.util.concurrent.FastThreadLocal;
+import javax.annotation.Nullable;
 
 /**
  * This class holds the {@link ThreadLocal} for the propagated context, or the
@@ -29,7 +30,7 @@ import io.netty.util.concurrent.FastThreadLocal;
 @Internal
 @SuppressWarnings("unchecked")
 final class ThreadContext {
-    private static final Object FAST;
+    @Nullable private static final Object FAST;
     private static final ThreadLocal<PropagatedContextImpl> SLOW;
 
     static {

@@ -31,6 +31,7 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Function;
+import javax.annotation.Nullable;
 
 /**
  * Thread-safe map that is optimized for reads. Uses a normal {@link HashMap} that is copied on
@@ -69,7 +70,7 @@ public final class CopyOnWriteMap<K, V> extends AbstractMap<K, V> implements Con
         return new EntrySet();
     }
 
-    @Override
+    @Nullable @Override
     public V get(Object key) {
         return actual.get(key);
     }
@@ -110,7 +111,7 @@ public final class CopyOnWriteMap<K, V> extends AbstractMap<K, V> implements Con
     }
 
     @Override
-    public V remove(Object key) {
+    public V remove(@Nullable Object key) {
         return update(m -> m.remove(key));
     }
 
@@ -262,7 +263,7 @@ public final class CopyOnWriteMap<K, V> extends AbstractMap<K, V> implements Con
 
     private class EntrySetIterator implements Iterator<Entry<K, V>> {
         final Iterator<? extends Entry<? extends K, ? extends V>> itr = actual.entrySet().iterator();
-        K lastKey;
+        @Nullable K lastKey;
 
         @Override
         public boolean hasNext() {

@@ -17,6 +17,7 @@ package io.micronaut.core.type;
 
 import io.micronaut.core.annotation.AnnotationMetadata;
 import io.micronaut.core.annotation.Internal;
+import javax.annotation.Nullable;
 
 /**
  * Implementation of {@link GenericPlaceholder}.
@@ -28,7 +29,7 @@ import io.micronaut.core.annotation.Internal;
 final class DefaultGenericPlaceholder<T>
         extends DefaultArgument<T>
         implements GenericPlaceholder<T> {
-    private final String variableName;
+    @Nullable private final String variableName;
 
     /**
      * Constructor for where the variable name and argument name are the same.
@@ -40,9 +41,9 @@ final class DefaultGenericPlaceholder<T>
      */
     DefaultGenericPlaceholder(
             Class<T> type,
-            String name,
-            AnnotationMetadata annotationMetadata,
-            Argument<?>... genericTypes) {
+            @Nullable String name,
+            @Nullable AnnotationMetadata annotationMetadata,
+            @Nullable Argument<?>... genericTypes) {
         super(type, name, annotationMetadata, genericTypes);
         this.variableName = name;
     }
@@ -58,15 +59,15 @@ final class DefaultGenericPlaceholder<T>
      */
     DefaultGenericPlaceholder(
             Class<T> type,
-            String name,
+            @Nullable String name,
             String variableName,
-            AnnotationMetadata annotationMetadata,
-            Argument<?>... genericTypes) {
+            @Nullable AnnotationMetadata annotationMetadata,
+            @Nullable Argument<?>... genericTypes) {
         super(type, name, annotationMetadata, genericTypes);
         this.variableName = variableName;
     }
 
-    @Override
+    @Nullable @Override
     public String getVariableName() {
         return variableName;
     }
