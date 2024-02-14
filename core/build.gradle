@@ -55,18 +55,18 @@ tasks.named("processResources") {
 }
 import net.ltgt.gradle.errorprone.CheckSeverity
 tasks.withType(JavaCompile) {
-    // remove the if condition if you want to run NullAway on test code
     if (!name.toLowerCase().contains("test")) {
         options.errorprone {
-            check("NullAway", CheckSeverity.WARN)
+            check("NullAway", CheckSeverity.ERROR)
+            check("SizeGreaterThanOrEqualsZero", CheckSeverity.OFF)
             option("NullAway:AnnotatedPackages", "io.micronaut.core")
 
         }
         options.compilerArgs << "-Xmaxerrs"<< "100000"
         options.compilerArgs << "-Xmaxwarns" << "100000"
+        options.compilerArgs += ["-nowarn"]
     }
 }
-
 tasks.withType(JapicmpTask).configureEach {
     richReport {
         addViolationTransformer(RemovedPackages, [prefixes: ['io.micronaut.caffeine'], exact: []])
