@@ -125,7 +125,7 @@ public class MultiValuesConverterFactory {
      * @return All the values in a Map
      */
     private static Map<String, String> getSeparatedMapParameters(
-            ConvertibleMultiValues<String> parameters, String name, String defaultValue, Character delimiter
+            ConvertibleMultiValues<String> parameters, String name, @Nullable String defaultValue, Character delimiter
     ) {
         List<String> paramValues = parameters.getAll(name);
 
@@ -342,7 +342,7 @@ public class MultiValuesConverterFactory {
 
         @Override
         protected Optional<Iterable> retrieveSeparatedValue(ArgumentConversionContext<Iterable> conversionContext,
-            String name, ConvertibleMultiValues<String> parameters, String defaultValue, Character delimiter
+            String name, ConvertibleMultiValues<String> parameters, @Nullable String defaultValue, Character delimiter
         ) {
             List<String> values = parameters.getAll(name);
             if (values.isEmpty() && defaultValue != null) {
@@ -415,7 +415,7 @@ public class MultiValuesConverterFactory {
         protected Optional<Map> retrieveSeparatedValue(ArgumentConversionContext<Map> conversionContext,
                                                        String name,
                                                        ConvertibleMultiValues<String> parameters,
-                                                       String defaultValue,
+                                                       @Nullable String defaultValue,
                                                        Character delimiter
         ) {
             Map<String, String> values = getSeparatedMapParameters(parameters, name, defaultValue, delimiter);
@@ -490,7 +490,7 @@ public class MultiValuesConverterFactory {
 
         @Override
         protected Optional<Object> retrieveSeparatedValue(ArgumentConversionContext<Object> conversionContext,
-            String name, ConvertibleMultiValues<String> parameters, String defaultValue, Character delimiter
+            String name, ConvertibleMultiValues<String> parameters, @Nullable String defaultValue, Character delimiter
         ) {
             Map<String, String> values = getSeparatedMapParameters(parameters, name, defaultValue, delimiter);
             return convertValues(conversionContext, values);

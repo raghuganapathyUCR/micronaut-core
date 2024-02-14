@@ -66,12 +66,12 @@ final class DelayedExecutionFlowImpl<T> implements DelayedExecutionFlow<T> {
     }
 
     @Override
-    public void complete(T result) {
+    public void complete(@Nullable T result) {
         complete0(result == null ? ExecutionFlow.empty() : ExecutionFlow.just(result));
     }
 
     @Override
-    public void completeExceptionally(Throwable exc) {
+    public void completeExceptionally(@Nullable Throwable exc) {
         complete0(ExecutionFlow.error(exc));
     }
 
@@ -139,11 +139,11 @@ final class DelayedExecutionFlowImpl<T> implements DelayedExecutionFlow<T> {
         /**
          * The next step to take, or {@code null} if there is no next step yet.
          */
-        private volatile Step next;
+        @Nullable private volatile Step next;
         /**
          * The output of this step, or {@code null} if this step has not completed yet.
          */
-        private volatile ExecutionFlow<Object> output;
+        @Nullable private volatile ExecutionFlow<Object> output;
 
         /**
          * Apply this step.

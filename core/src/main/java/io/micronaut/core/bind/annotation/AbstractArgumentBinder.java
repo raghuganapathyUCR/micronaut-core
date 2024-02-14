@@ -146,7 +146,7 @@ public abstract class AbstractArgumentBinder<T> {
      * @param defaultResult The binding result if the value is null
      * @return The binding result
      */
-    protected BindingResult<T> doConvert(Object value, ArgumentConversionContext<T> context, BindingResult<T> defaultResult) {
+    protected BindingResult<T> doConvert(@Nullable Object value, ArgumentConversionContext<T> context, BindingResult<T> defaultResult) {
         if (value == null) {
             Optional<ConversionError> lastError = context.getLastError();
             if (lastError.isPresent()) {

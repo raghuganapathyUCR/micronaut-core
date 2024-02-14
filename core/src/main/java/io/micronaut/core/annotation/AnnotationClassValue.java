@@ -19,6 +19,7 @@ import io.micronaut.core.naming.Named;
 import io.micronaut.core.util.ArgumentUtils;
 import java.util.Objects;
 import java.util.Optional;
+import javax.annotation.Nullable;
 
 /**
  * An annotation class value is a reference to a class in annotation metadata. The class may or may not be present
@@ -36,10 +37,10 @@ public final class AnnotationClassValue<T> implements CharSequence, Named {
      */
     public static final AnnotationClassValue<?>[] EMPTY_ARRAY = new AnnotationClassValue[0];
 
-    final Class<T> theClass;
+    @Nullable final Class<T> theClass;
 
     private final String name;
-    private final T instance;
+    @Nullable private final T instance;
     private final boolean instantiated;
 
     /**

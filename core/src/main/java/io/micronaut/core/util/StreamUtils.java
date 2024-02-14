@@ -21,6 +21,7 @@ import java.util.function.BinaryOperator;
 import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collector;
+import javax.annotation.Nullable;
 
 /**
  * Utility methods for working with streams.
@@ -51,7 +52,7 @@ public class StreamUtils {
          */
         class Container {
             A acc;
-            T obj;
+            @Nullable T obj;
             boolean hasAny;
 
             /**
@@ -123,7 +124,7 @@ public class StreamUtils {
          */
         class Container {
             A acc;
-            T obj;
+            @Nullable T obj;
             boolean hasAny;
 
             /**

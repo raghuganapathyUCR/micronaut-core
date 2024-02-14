@@ -30,6 +30,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 /**
  * An implementation of {@link ConvertibleMultiValues} that uses a backing {@link LinkedHashMap}.
@@ -117,7 +118,7 @@ public class ConvertibleMultiValuesMap<V> implements ConvertibleMultiValues<V>, 
         }
     }
 
-    @Override
+    @Nullable @Override
     public V get(CharSequence name) {
         List<V> all = getAll(name);
         if (all.isEmpty()) {

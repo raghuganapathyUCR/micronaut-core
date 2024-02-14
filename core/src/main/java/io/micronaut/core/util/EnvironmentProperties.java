@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.function.Function;
+import javax.annotation.Nullable;
 
 /**
  * A mapping from environment variable names to Micronaut
@@ -37,11 +38,11 @@ import java.util.function.Function;
 @Internal
 public final class EnvironmentProperties {
     private static final char[] DOT_DASH = new char[] {'.', '-'};
-    private final EnvironmentProperties delegate;
+    @Nullable private final EnvironmentProperties delegate;
 
     private final Map<String, List<String>> cache = new HashMap<>();
 
-    private EnvironmentProperties(EnvironmentProperties delegate) {
+    private EnvironmentProperties(@Nullable EnvironmentProperties delegate) {
         this.delegate = delegate;
     }
 

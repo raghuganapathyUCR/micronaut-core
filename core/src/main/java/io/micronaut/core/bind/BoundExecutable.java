@@ -21,6 +21,7 @@ import io.micronaut.core.type.Executable;
 
 import java.util.Collections;
 import java.util.List;
+import javax.annotation.Nullable;
 
 /**
  * A bound {@link Executable} is an executable who argument values have been pre-bound to
@@ -45,7 +46,7 @@ public interface BoundExecutable<T, R> extends Executable<T, R> {
      * @param instance The target instance
      * @return The result
      */
-    R invoke(T instance);
+    @Nullable R invoke(T instance);
 
     /**
      * That arguments that will be used to invoke the method.
@@ -68,8 +69,8 @@ public interface BoundExecutable<T, R> extends Executable<T, R> {
         return Collections.emptyList();
     }
 
-    @Override
-    default R invoke(T instance, Object... arguments) {
+    @Nullable @Override
+    default R invoke(@Nullable T instance, Object... arguments) {
         return getTarget().invoke(instance, arguments);
     }
 

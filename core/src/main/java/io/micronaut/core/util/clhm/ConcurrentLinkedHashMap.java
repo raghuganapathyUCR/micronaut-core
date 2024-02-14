@@ -46,6 +46,7 @@ import static java.util.Collections.unmodifiableSet;
 import static io.micronaut.core.util.clhm.ConcurrentLinkedHashMap.DrainStatus.IDLE;
 import static io.micronaut.core.util.clhm.ConcurrentLinkedHashMap.DrainStatus.PROCESSING;
 import static io.micronaut.core.util.clhm.ConcurrentLinkedHashMap.DrainStatus.REQUIRED;
+import javax.annotation.Nullable;
 
 /**
  * A hash table supporting full concurrency of retrievals, adjustable expected
@@ -201,9 +202,9 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
     private final Queue<Node<K, V>> pendingNotifications;
     private final EvictionListener<K, V> listener;
 
-    private transient Set<K> keySet;
-    private transient Collection<V> values;
-    private transient Set<Entry<K, V>> entrySet;
+    @Nullable private transient Set<K> keySet;
+    @Nullable private transient Collection<V> values;
+    @Nullable private transient Set<Entry<K, V>> entrySet;
 
     /**
      * Creates an instance based on the builder's configuration.
@@ -597,7 +598,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
         return false;
     }
 
-    @Override
+    @Nullable @Override
     public V get(Object key) {
         final Node<K, V> node = data.get(key);
         if (node == null) {
@@ -618,17 +619,17 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
      *     {@code null} if this map contains no mapping for the key
      * @throws NullPointerException if the specified key is null
      */
-    public V getQuietly(Object key) {
+    @Nullable public V getQuietly(Object key) {
         final Node<K, V> node = data.get(key);
         return (node == null) ? null : node.getValue();
     }
 
-    @Override
+    @Nullable @Override
     public V put(K key, V value) {
         return put(key, value, false);
     }
 
-    @Override
+    @Nullable @Override
     public V putIfAbsent(K key, V value) {
         return put(key, value, true);
     }
@@ -643,7 +644,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
      *     associated with a value
      * @return the prior value in the data store or null if no mapping was found
      */
-    private V put(K key, V value, boolean onlyIfAbsent) {
+    @Nullable private V put(K key, V value, boolean onlyIfAbsent) {
         checkNotNull(key);
         checkNotNull(value);
 
@@ -771,8 +772,8 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
         }
     }
 
-    @Override
-    public V remove(Object key) {
+    @Nullable @Override
+    public V remove(@Nullable Object key) {
         final Node<K, V> node = data.remove(key);
         if (node == null) {
             return null;
@@ -811,7 +812,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
         }
     }
 
-    @Override
+    @Nullable @Override
     public V replace(K key, V value) {
         checkNotNull(key);
         checkNotNull(value);
@@ -1195,9 +1196,9 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
             implements Linked<Node<K, V>> {
         final K key;
         // @GuardedBy("evictionLock")
-        Node<K, V> prev;
+        @Nullable Node<K, V> prev;
         // @GuardedBy("evictionLock")
-        Node<K, V> next;
+        @Nullable Node<K, V> next;
         WeightedValue<V> weightedValue;
 
         /** Creates a new, unlinked node. */
@@ -1207,7 +1208,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
             this.weightedValue = weightedValue;
         }
 
-        @Override
+        @Nullable @Override
         // @GuardedBy("evictionLock")
         public Node<K, V> getPrevious() {
             return prev;
@@ -1215,11 +1216,11 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
 
         @Override
         // @GuardedBy("evictionLock")
-        public void setPrevious(Node<K, V> prev) {
+        public void setPrevious(@Nullable Node<K, V> prev) {
             this.prev = prev;
         }
 
-        @Override
+        @Nullable @Override
         // @GuardedBy("evictionLock")
         public Node<K, V> getNext() {
             return next;
@@ -1227,7 +1228,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
 
         @Override
         // @GuardedBy("evictionLock")
-        public void setNext(Node<K, V> next) {
+        public void setNext(@Nullable Node<K, V> next) {
             this.next = next;
         }
 
@@ -1284,7 +1285,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
     /** An adapter to safely externalize the key iterator. */
     final class KeyIterator implements Iterator<K> {
         final Iterator<K> iterator = data.keySet().iterator();
-        K current;
+        @Nullable K current;
 
         @Override
         public boolean hasNext() {
@@ -1332,7 +1333,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
     /** An adapter to safely externalize the value iterator. */
     final class ValueIterator implements Iterator<V> {
         final Iterator<Node<K, V>> iterator = data.values().iterator();
-        Node<K, V> current;
+        @Nullable Node<K, V> current;
 
         @Override
         public boolean hasNext() {
@@ -1400,7 +1401,7 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
     /** An adapter to safely externalize the entry iterator. */
     final class EntryIterator implements Iterator<Entry<K, V>> {
         final Iterator<Node<K, V>> iterator = data.values().iterator();
-        Node<K, V> current;
+        @Nullable Node<K, V> current;
 
         @Override
         public boolean hasNext() {
@@ -1480,11 +1481,11 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
             return true;
         }
 
-        @Override public Object poll() {
+        @Nullable @Override public Object poll() {
             return null;
         }
 
-        @Override public Object peek() {
+        @Nullable @Override public Object peek() {
             return null;
         }
 
@@ -1561,12 +1562,12 @@ public final class ConcurrentLinkedHashMap<K, V> extends AbstractMap<K, V>
      * @param <T> the type of object
      */
     private class ObjectHolder<T> {
-        private T object;
+        @Nullable private T object;
 
         ObjectHolder() {
         }
 
-        public T getObject() {
+        @Nullable public T getObject() {
             return object;
         }
 

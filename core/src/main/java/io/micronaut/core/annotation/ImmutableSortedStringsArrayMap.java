@@ -26,6 +26,7 @@ import java.util.NoSuchElementException;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.BiConsumer;
+import javax.annotation.Nullable;
 
 /**
  * The immutable map which is using the advantage of compile-time processing an ability to have
@@ -120,7 +121,7 @@ final class ImmutableSortedStringsArrayMap<V> implements Map<String, V> {
         return false;
     }
 
-    @Override
+    @Nullable @Override
     public V get(Object key) {
         Objects.requireNonNull(key);
         int keyIndex = findKeyIndex(key);

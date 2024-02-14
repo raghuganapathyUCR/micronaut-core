@@ -21,12 +21,13 @@ import io.micronaut.core.convert.ConversionError;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import javax.annotation.Nullable;
 
 @Internal
 final class MappedBindingResult<T, R> implements ArgumentBinder.BindingResult<R> {
     private final ArgumentBinder.BindingResult<T> source;
     private final Function<T, ArgumentBinder.BindingResult<R>> function;
-    private ArgumentBinder.BindingResult<R> second;
+    @Nullable private ArgumentBinder.BindingResult<R> second;
 
     MappedBindingResult(ArgumentBinder.BindingResult<T> source, Function<T, ArgumentBinder.BindingResult<R>> function) {
         this.source = source;

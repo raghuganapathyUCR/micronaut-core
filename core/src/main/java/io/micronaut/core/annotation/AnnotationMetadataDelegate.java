@@ -20,6 +20,7 @@ import io.micronaut.core.value.OptionalValues;
 
 import java.lang.annotation.Annotation;
 import java.util.*;
+import javax.annotation.Nullable;
 
 /**
  * An interface that can be implemented by other classes that delegate the resolution of the {@link AnnotationMetadata}
@@ -51,7 +52,7 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
     }
 
     @Override
-    default <T extends Annotation> List<AnnotationValue<T>> getAnnotationValuesByStereotype(String stereotype) {
+    default <T extends Annotation> List<AnnotationValue<T>> getAnnotationValuesByStereotype(@Nullable String stereotype) {
         return getAnnotationMetadata().getAnnotationValuesByStereotype(stereotype);
     }
 
@@ -271,7 +272,7 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
         return getAnnotationMetadata().getDefaultValue(annotation, member, requiredType);
     }
 
-    @Override
+    @Nullable @Override
     default <T extends Annotation> T synthesizeDeclared(@NonNull Class<T> annotationClass) {
         return getAnnotationMetadata().synthesizeDeclared(annotationClass);
     }
@@ -335,12 +336,12 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
     }
 
     @Override
-    default @NonNull Optional<String> getAnnotationNameByStereotype(String stereotype) {
+    default @NonNull Optional<String> getAnnotationNameByStereotype(@Nullable String stereotype) {
         return getAnnotationMetadata().getAnnotationNameByStereotype(stereotype);
     }
 
     @Override
-    default @NonNull Optional<String> getDeclaredAnnotationNameByStereotype(String stereotype) {
+    default @NonNull Optional<String> getDeclaredAnnotationNameByStereotype(@Nullable String stereotype) {
         return getAnnotationMetadata().getDeclaredAnnotationNameByStereotype(stereotype);
     }
 
@@ -355,12 +356,12 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
     }
 
     @Override
-    default @NonNull Optional<Class<? extends Annotation>> getDeclaredAnnotationTypeByStereotype(String stereotype) {
+    default @NonNull Optional<Class<? extends Annotation>> getDeclaredAnnotationTypeByStereotype(@Nullable String stereotype) {
         return getAnnotationMetadata().getDeclaredAnnotationTypeByStereotype(stereotype);
     }
 
     @Override
-    default @NonNull Optional<Class<? extends Annotation>> getAnnotationTypeByStereotype(String stereotype) {
+    default @NonNull Optional<Class<? extends Annotation>> getAnnotationTypeByStereotype(@Nullable String stereotype) {
         return getAnnotationMetadata().getAnnotationTypeByStereotype(stereotype);
     }
 
@@ -520,12 +521,12 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
     }
 
     @Override
-    default boolean hasStereotype(Class<? extends Annotation>... annotations) {
+    default boolean hasStereotype(@Nullable Class<? extends Annotation>... annotations) {
         return getAnnotationMetadata().hasStereotype(annotations);
     }
 
     @Override
-    default boolean hasStereotype(String[] annotations) {
+    default boolean hasStereotype(@Nullable String[] annotations) {
         return getAnnotationMetadata().hasStereotype(annotations);
     }
 
@@ -540,7 +541,7 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
     }
 
     @Override
-    default boolean hasDeclaredStereotype(Class<? extends Annotation>... annotations) {
+    default boolean hasDeclaredStereotype(@Nullable Class<? extends Annotation>... annotations) {
         return getAnnotationMetadata().hasDeclaredStereotype(annotations);
     }
 
@@ -550,7 +551,7 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
     }
 
     @Override
-    default boolean hasDeclaredAnnotation(String annotation) {
+    default boolean hasDeclaredAnnotation(@Nullable String annotation) {
         return getAnnotationMetadata().hasDeclaredAnnotation(annotation);
     }
 
@@ -565,27 +566,27 @@ public interface AnnotationMetadataDelegate extends AnnotationMetadataProvider, 
     }
 
     @Override
-    default boolean hasAnnotation(String annotation) {
+    default boolean hasAnnotation(@Nullable String annotation) {
         return getAnnotationMetadata().hasAnnotation(annotation);
     }
 
     @Override
-    default boolean hasStereotype(String annotation) {
+    default boolean hasStereotype(@Nullable String annotation) {
         return getAnnotationMetadata().hasStereotype(annotation);
     }
 
     @Override
-    default boolean hasDeclaredStereotype(String annotation) {
+    default boolean hasDeclaredStereotype(@Nullable String annotation) {
         return getAnnotationMetadata().hasDeclaredStereotype(annotation);
     }
 
     @Override
-    default @NonNull List<String> getAnnotationNamesByStereotype(String stereotype) {
+    default @NonNull List<String> getAnnotationNamesByStereotype(@Nullable String stereotype) {
         return getAnnotationMetadata().getAnnotationNamesByStereotype(stereotype);
     }
 
     @Override
-    default @NonNull List<String> getDeclaredAnnotationNamesByStereotype(String stereotype) {
+    default @NonNull List<String> getDeclaredAnnotationNamesByStereotype(@Nullable String stereotype) {
         return getAnnotationMetadata().getDeclaredAnnotationNamesByStereotype(stereotype);
     }
 

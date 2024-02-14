@@ -28,6 +28,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 /**
  * Provides information about a type at runtime.
@@ -231,7 +232,7 @@ public interface TypeInformation<T> extends TypeVariableResolver, AnnotationMeta
                 return TypeInformation.this.getType();
             }
 
-            @Override
+            @Nullable @Override
             public Type getOwnerType() {
                 return null;
             }

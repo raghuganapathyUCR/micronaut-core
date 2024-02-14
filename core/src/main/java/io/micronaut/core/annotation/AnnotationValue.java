@@ -46,6 +46,7 @@ import java.util.OptionalLong;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.annotation.Nullable;
 
 /**
  * A runtime representation of the annotation and its values.
@@ -139,7 +140,7 @@ public class AnnotationValue<A extends Annotation> implements AnnotationValueRes
      */
     @UsedByGeneratedCode
     @Internal
-    public AnnotationValue(String annotationName, Map<CharSequence, Object> values, Map<CharSequence, Object> defaultValues, RetentionPolicy retentionPolicy) {
+    public AnnotationValue(String annotationName, Map<CharSequence, Object> values, @Nullable Map<CharSequence, Object> defaultValues, RetentionPolicy retentionPolicy) {
         this(annotationName, values, defaultValues, retentionPolicy, null);
     }
 
@@ -153,9 +154,9 @@ public class AnnotationValue<A extends Annotation> implements AnnotationValueRes
     @Internal
     public AnnotationValue(String annotationName,
                            Map<CharSequence, Object> values,
-                           Map<CharSequence, Object> defaultValues,
+                           @Nullable Map<CharSequence, Object> defaultValues,
                            RetentionPolicy retentionPolicy,
-                           List<AnnotationValue<?>> stereotypes) {
+                           @Nullable List<AnnotationValue<?>> stereotypes) {
         this(annotationName, values, defaultValues, retentionPolicy, stereotypes, null);
     }
 
@@ -170,10 +171,10 @@ public class AnnotationValue<A extends Annotation> implements AnnotationValueRes
     @Internal
     public AnnotationValue(String annotationName,
                            Map<CharSequence, Object> values,
-                           Map<CharSequence, Object> defaultValues,
+                           @Nullable Map<CharSequence, Object> defaultValues,
                            RetentionPolicy retentionPolicy,
-                           List<AnnotationValue<?>> stereotypes,
-                           AnnotationDefaultValuesProvider defaultValuesProvider) {
+                           @Nullable List<AnnotationValue<?>> stereotypes,
+                           @Nullable AnnotationDefaultValuesProvider defaultValuesProvider) {
         this.annotationName = annotationName;
         this.convertibleValues = newConvertibleValues(values);
         this.values = values;
@@ -352,7 +353,7 @@ public class AnnotationValue<A extends Annotation> implements AnnotationValueRes
      * @param <E>         The enum type
      * @return An {@link Optional} of the enum value
      */
-    public <E extends Enum> Optional<E> enumValue(@NonNull String member, @NonNull Class<E> enumType, Function<Object, Object> valueMapper) {
+    public <E extends Enum> Optional<E> enumValue(@NonNull String member, @NonNull Class<E> enumType, @Nullable Function<Object, Object> valueMapper) {
         ArgumentUtils.requireNonNull("enumType", enumType);
         if (StringUtils.isEmpty(member)) {
             return Optional.empty();
@@ -668,7 +669,7 @@ public class AnnotationValue<A extends Annotation> implements AnnotationValueRes
      * @param valueMapper The mapper
      * @return The string values
      */
-    public String[] stringValues(@NonNull String member, Function<Object, Object> valueMapper) {
+    public String[] stringValues(@NonNull String member, @Nullable Function<Object, Object> valueMapper) {
         if (StringUtils.isEmpty(member)) {
             return StringUtils.EMPTY_STRING_ARRAY;
         }
@@ -1669,7 +1670,7 @@ public class AnnotationValue<A extends Annotation> implements AnnotationValueRes
     }
 
     @Nullable
-    private Object getRawSingleValue(@NonNull String member, Function<Object, Object> valueMapper) {
+    private Object getRawSingleValue(@NonNull String member, @Nullable Function<Object, Object> valueMapper) {
         Object rawValue = values.get(member);
         if (rawValue != null) {
             if (rawValue.getClass().isArray()) {

@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 package io.micronaut.core.cli;
+import javax.annotation.Nullable;
 
 /**
  * Represents a command line option.
@@ -30,7 +31,7 @@ public class Option {
      * @param name        The name
      * @param description The description
      */
-    public Option(String name, String description) {
+    public Option(String name, @Nullable String description) {
         if (name == null || name.length() == 0) {
             throw new IllegalArgumentException("illegal option specified");
         }

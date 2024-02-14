@@ -17,6 +17,7 @@ package io.micronaut.core.util;
 
 import java.util.Optional;
 import java.util.function.Supplier;
+import javax.annotation.Nullable;
 
 /**
  * Helper methods for dealing with {@link Supplier}.
@@ -36,9 +37,9 @@ public class SupplierUtil {
     public static <T> Supplier<T> memoized(Supplier<T> valueSupplier) {
         return new Supplier<>() {
             private volatile boolean initialized;
-            private T value; // Doesn't need to be volatile
+            @Nullable private T value; // Doesn't need to be volatile
 
-            @Override
+            @Nullable @Override
             public T get() {
                 // Double check locking
                 if (!initialized) {
@@ -68,9 +69,9 @@ public class SupplierUtil {
     public static <T> Supplier<T> memoizedNonEmpty(Supplier<T> valueSupplier) {
         return new Supplier<>() {
             private volatile boolean initialized;
-            private T value; // Doesn't need to be volatile
+            @Nullable private T value; // Doesn't need to be volatile
 
-            @Override
+            @Nullable @Override
             public T get() {
                 // Double check locking
                 if (!initialized) {

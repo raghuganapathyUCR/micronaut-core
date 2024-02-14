@@ -19,6 +19,7 @@ import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.naming.Described;
 import io.micronaut.core.type.Argument;
 import io.micronaut.core.type.Executable;
+import javax.annotation.Nullable;
 
 /**
  * Utility methods for checking method argument values.
@@ -130,9 +131,9 @@ public class ArgumentUtils {
      * @param <T> The type
      */
     public static class ArgumentCheck<T> {
-        private final Check check;
-        private final String name;
-        private final T value;
+        @Nullable private final Check check;
+        @Nullable private final String name;
+        @Nullable private final T value;
 
         /**
          * @param check The check

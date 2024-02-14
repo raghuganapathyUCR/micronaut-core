@@ -47,7 +47,7 @@ public abstract class AbstractBeanProperty<B, P> implements UnsafeBeanProperty<B
     private final Class<P> type;
     private final String name;
     private final AnnotationMetadata annotationMetadata;
-    private final Argument[] typeArguments;
+    @Nullable private final Argument[] typeArguments;
     private final Class<?> typeOrWrapperType;
 
     /**
@@ -136,7 +136,7 @@ public abstract class AbstractBeanProperty<B, P> implements UnsafeBeanProperty<B
     }
 
     @Override
-    public final B withValueUnsafe(B bean, P value) {
+    public final B withValueUnsafe(B bean, @Nullable P value) {
         if (value == getUnsafe(bean)) {
             return bean;
         } else {
@@ -166,7 +166,7 @@ public abstract class AbstractBeanProperty<B, P> implements UnsafeBeanProperty<B
     }
 
     @Override
-    public final void setUnsafe(B bean, P value) {
+    public final void setUnsafe(B bean, @Nullable P value) {
         writeInternal(bean, value);
     }
 
@@ -180,7 +180,7 @@ public abstract class AbstractBeanProperty<B, P> implements UnsafeBeanProperty<B
     @SuppressWarnings("WeakerAccess")
     @UsedByGeneratedCode
     @Internal
-    protected B withValueInternal(B bean, P value) {
+    protected B withValueInternal(B bean, @Nullable P value) {
         return UnsafeBeanProperty.super.withValue(bean, value);
     }
 

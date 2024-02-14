@@ -235,7 +235,7 @@ public interface ConvertibleValues<V> extends ValueResolver<CharSequence>, Itera
                         return name;
                     }
 
-                    @Override
+                    @Nullable @Override
                     public V getValue() {
                         return get(name, getValueType()).orElse(null);
                     }

@@ -103,7 +103,7 @@ public class DefaultExecutableBinder<S> implements ExecutableBinder<S> {
                 return target;
             }
 
-            @Override
+            @Nullable @Override
             public R invoke(T instance) {
                 return target.invoke(instance, getBoundArguments());
             }
@@ -169,7 +169,7 @@ public class DefaultExecutableBinder<S> implements ExecutableBinder<S> {
                 return target;
             }
 
-            @Override
+            @Nullable @Override
             public R invoke(T instance) {
                 return target.invoke(instance, getBoundArguments());
             }

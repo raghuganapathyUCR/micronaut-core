@@ -29,6 +29,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
+import javax.annotation.Nullable;
 
 
 /**
@@ -122,7 +123,7 @@ public class DefaultFileSystemResourceLoader implements FileSystemResourceLoader
         return startsWithBase(filePath) && Files.exists(filePath) && Files.isReadable(filePath) && !Files.isDirectory(filePath);
     }
 
-    @SuppressWarnings("MagicNumber")
+    @Nullable @SuppressWarnings("MagicNumber")
     private static String normalize(String path) {
         if (path == null) {
             return null;
@@ -133,7 +134,7 @@ public class DefaultFileSystemResourceLoader implements FileSystemResourceLoader
         return path;
     }
 
-    private Path getFilePath(String path) {
+    private Path getFilePath(@Nullable String path) {
         BaseDir base = baseDir.get();
         if (base != null) {
             return base.resolve(path);
@@ -152,7 +153,7 @@ public class DefaultFileSystemResourceLoader implements FileSystemResourceLoader
 
     private static class BaseDir {
         final boolean exists;
-        final Path dir;
+        @Nullable final Path dir;
 
         BaseDir() {
             exists = true;
@@ -170,7 +171,7 @@ public class DefaultFileSystemResourceLoader implements FileSystemResourceLoader
             this.dir = baseDirPath;
         }
 
-        Path resolve(String path) {
+        Path resolve(@Nullable String path) {
             if (dir != null) {
                 return dir.resolve(path);
             } else {

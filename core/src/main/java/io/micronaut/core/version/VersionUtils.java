@@ -50,7 +50,7 @@ public class VersionUtils {
     /**
      * The current version of Micronaut.
      */
-    @SuppressWarnings("DeclarationOrder")
+    @Nullable @SuppressWarnings("DeclarationOrder")
     public static final String MICRONAUT_VERSION = getMicronautVersion();
 
     /**

@@ -222,7 +222,7 @@ public class ClassUtils {
      * @param typeName The type name
      * @return True if it is
      */
-    public static boolean isJavaLangType(String typeName) {
+    public static boolean isJavaLangType(@Nullable String typeName) {
         return COMMON_CLASS_MAP.containsKey(typeName);
     }
 

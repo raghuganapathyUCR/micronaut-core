@@ -29,6 +29,7 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
+import javax.annotation.Nullable;
 
 /**
  * The implementation of {@link PropagatedContext}.
@@ -163,7 +164,7 @@ final class PropagatedContextImpl implements PropagatedContext {
         return element;
     }
 
-    private <T extends PropagatedContextElement> T findElement(Class<T> elementType) {
+    @Nullable private <T extends PropagatedContextElement> T findElement(Class<T> elementType) {
         for (int i = elements.length - 1; i >= 0; i--) {
             PropagatedContextElement element = elements[i];
             if (elementType.isInstance(element)) {

@@ -3,8 +3,14 @@ import me.champeau.gradle.japicmp.JapicmpTask
 
 plugins {
     id "io.micronaut.build.internal.convention-core-library"
+    id "net.ltgt.errorprone" version "3.1.0"
+    id "edu.ucr.cs.riple.annotator.plugin" version "0.0.1"
 }
-
+repositories {
+    mavenLocal()
+    gradlePluginPortal()
+    mavenCentral()
+}
 micronautBuild {
     core {
         documented = false
@@ -16,6 +22,15 @@ dependencies {
     compileOnly libs.graal
     compileOnly libs.managed.kotlin.stdlib
     compileOnly libs.managed.netty.common
+
+
+
+    annotationProcessor "com.uber.nullaway:nullaway:0.10.22"
+
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+//
+    errorprone "com.google.errorprone:error_prone_core:2.24.1"
+    errorproneJavac "com.google.errorprone:javac:9+181-r4173-1"
 }
 
 spotless {
@@ -38,9 +53,25 @@ def versionInfo = tasks.register("micronautVersionInfo", WriteProperties) {
 tasks.named("processResources") {
     from(versionInfo)
 }
+import net.ltgt.gradle.errorprone.CheckSeverity
+tasks.withType(JavaCompile) {
+    if (!name.toLowerCase().contains("test")) {
+        options.errorprone {
+            check("NullAway", CheckSeverity.ERROR)
+            check("SizeGreaterThanOrEqualsZero", CheckSeverity.OFF)
+            option("NullAway:AnnotatedPackages", "io.micronaut.core")
 
+        }
+        options.compilerArgs << "-Xmaxerrs"<< "100000"
+        options.compilerArgs << "-Xmaxwarns" << "100000"
+        options.compilerArgs += ["-nowarn"]
+    }
+}
 tasks.withType(JapicmpTask).configureEach {
-   richReport {
-       addViolationTransformer(RemovedPackages, [prefixes: ['io.micronaut.caffeine'], exact: []])
-   }
+    richReport {
+        addViolationTransformer(RemovedPackages, [prefixes: ['io.micronaut.caffeine'], exact: []])
+    }
+}
+tasks.named("runAnnotator", RunAnnotator).configure {
+    extraOptions = ['-rboserr']
 }

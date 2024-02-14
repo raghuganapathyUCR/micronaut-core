@@ -35,7 +35,7 @@ public class KotlinUtils {
      */
     public static final boolean KOTLIN_COROUTINES_SUPPORTED;
 
-    public static final Object COROUTINE_SUSPENDED;
+    @Nullable public static final Object COROUTINE_SUSPENDED;
 
     static {
         boolean areKotlinCoroutinesSupportedCandidate;

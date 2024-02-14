@@ -92,6 +92,7 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
+import javax.annotation.Nullable;
 
 /**
  * The default conversion service. Handles basic type conversion operations.
@@ -166,7 +167,7 @@ public class DefaultMutableConversionService implements MutableConversionService
         }
 
         @Override
-        public <T> Optional<T> convert(Object object, Class<T> targetType, ConversionContext context) {
+        public <T> Optional<T> convert(@Nullable Object object, Class<T> targetType, ConversionContext context) {
             return DefaultMutableConversionService.this.convert(object, targetType, context);
         }
 
@@ -181,7 +182,7 @@ public class DefaultMutableConversionService implements MutableConversionService
         }
 
         @Override
-        public <T> Optional<T> convert(Object object, Class<T> targetType) {
+        public <T> Optional<T> convert(@Nullable Object object, Class<T> targetType) {
             return DefaultMutableConversionService.this.convert(object, targetType);
         }
 
@@ -191,22 +192,22 @@ public class DefaultMutableConversionService implements MutableConversionService
         }
 
         @Override
-        public <T> Optional<T> convert(Object object, ArgumentConversionContext<T> context) {
+        public <T> Optional<T> convert(@Nullable Object object, ArgumentConversionContext<T> context) {
             return DefaultMutableConversionService.this.convert(object, context);
         }
 
-        @Override
-        public <T> T convertRequired(Object value, Class<T> type) {
+        @Nullable @Override
+        public <T> T convertRequired(@Nullable Object value, Class<T> type) {
             return DefaultMutableConversionService.this.convertRequired(value, type);
         }
 
-        @Override
-        public <T> T convertRequired(Object value, Argument<T> argument) {
+        @Nullable @Override
+        public <T> T convertRequired(@Nullable Object value, Argument<T> argument) {
             return DefaultMutableConversionService.this.convertRequired(value, argument);
         }
 
         @Override
-        public <T> T convertRequired(Object value, ArgumentConversionContext<T> context) {
+        public <T> T convertRequired(@Nullable Object value, ArgumentConversionContext<T> context) {
             return DefaultMutableConversionService.this.convertRequired(value, context);
         }
     };
@@ -271,7 +272,7 @@ public class DefaultMutableConversionService implements MutableConversionService
         return typeConverter != UNCONVERTIBLE;
     }
 
-    private <T, S> TypeConverter<T, S> findConverter(ConvertiblePair pair) {
+    @Nullable private <T, S> TypeConverter<T, S> findConverter(ConvertiblePair pair) {
         TypeConverter typeConverter = internalConverters.get(pair);
         if (typeConverter != null) {
             return typeConverter;
@@ -279,7 +280,7 @@ public class DefaultMutableConversionService implements MutableConversionService
         return converterCache.get(pair);
     }
 
-    private <T, S> TypeConverter<T, S> findRegisteredConverter(ConvertiblePair pair) {
+    @Nullable private <T, S> TypeConverter<T, S> findRegisteredConverter(ConvertiblePair pair) {
         TypeConverter typeConverter = internalConverters.get(pair);
         if (typeConverter != null) {
             return typeConverter;
@@ -1209,7 +1210,7 @@ public class DefaultMutableConversionService implements MutableConversionService
      * @param <T>                  Generic type
      * @return type converter
      */
-    protected <T> TypeConverter<Object, T> findTypeConverter(Class<?> sourceType, Class<T> targetType, String formattingAnnotation) {
+    protected <T> TypeConverter<Object, T> findTypeConverter(Class<?> sourceType, Class<T> targetType, @Nullable String formattingAnnotation) {
         List<Class<?>> sourceHierarchy = resolveHierarchy(sourceType);
         List<Class<?>> targetHierarchy = resolveHierarchy(targetType);
         for (Class<?> sourceSuperType : sourceHierarchy) {
@@ -1254,7 +1255,7 @@ public class DefaultMutableConversionService implements MutableConversionService
                 .orElseGet(() -> new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z", context.getLocale()));
     }
 
-    private NumberFormat resolveNumberFormat(ConversionContext context) {
+    @Nullable private NumberFormat resolveNumberFormat(ConversionContext context) {
         return context.getAnnotationMetadata().stringValue(Format.class)
                 .map(DecimalFormat::new)
                 .orElse(null);
@@ -1276,14 +1277,14 @@ public class DefaultMutableConversionService implements MutableConversionService
     private static final class ConvertiblePair {
         final Class<?> source;
         final Class<?> target;
-        final String formattingAnnotation;
+        @Nullable final String formattingAnnotation;
         final int hashCode;
 
         ConvertiblePair(Class<?> source, Class<?> target) {
             this(source, target, null);
         }
 
-        ConvertiblePair(Class<?> source, Class<?> target, String formattingAnnotation) {
+        ConvertiblePair(Class<?> source, Class<?> target, @Nullable String formattingAnnotation) {
             this.source = source;
             this.target = target;
             this.formattingAnnotation = formattingAnnotation;
