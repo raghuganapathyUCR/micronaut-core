@@ -20,6 +20,8 @@ import io.micronaut.core.convert.ConversionService;
 
 import io.micronaut.core.annotation.NonNull;
 import io.micronaut.core.annotation.Nullable;
+import org.jetbrains.annotations.Contract;
+
 import java.lang.reflect.Constructor;
 import java.util.*;
 
@@ -182,6 +184,7 @@ public class CollectionUtils {
      * @param collection The collection
      * @return True if it is empty or null
      */
+    @Contract("null -> true")
     public static boolean isEmpty(@Nullable Collection collection) {
         return collection == null || collection.isEmpty();
     }

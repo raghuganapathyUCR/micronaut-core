@@ -18,6 +18,7 @@ package io.micronaut.core.util;
 import io.micronaut.core.annotation.Nullable;
 import io.micronaut.core.annotation.UsedByGeneratedCode;
 import io.micronaut.core.reflect.ReflectionUtils;
+import org.jetbrains.annotations.Contract;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -144,6 +145,8 @@ public final class ArrayUtils {
      * @param array The array
      * @return True if it is
      */
+
+    @Contract("null->true")
     public static boolean isEmpty(@Nullable Object[] array) {
         return array == null || array.length == 0;
     }

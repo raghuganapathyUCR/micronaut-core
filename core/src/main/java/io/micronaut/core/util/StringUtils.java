@@ -16,6 +16,8 @@
 package io.micronaut.core.util;
 
 import io.micronaut.core.annotation.Nullable;
+import org.checkerframework.checker.units.qual.C;
+import org.jetbrains.annotations.Contract;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -71,6 +73,7 @@ public final class StringUtils {
      * @param str The string
      * @return True if str is empty or null
      */
+    @Contract("null -> true")
     public static boolean isEmpty(@Nullable CharSequence str) {
         return str == null || str.length() == 0;
     }

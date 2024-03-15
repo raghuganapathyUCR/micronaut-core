@@ -4,7 +4,7 @@ import me.champeau.gradle.japicmp.JapicmpTask
 plugins {
     id "io.micronaut.build.internal.convention-core-library"
     id "net.ltgt.errorprone" version "3.1.0"
-    id "edu.ucr.cs.riple.annotator.plugin" version "0.0.1"
+//    id "edu.ucr.cs.riple.annotator.plugin" version "0.0.1"
 }
 repositories {
     mavenLocal()
@@ -72,6 +72,6 @@ tasks.withType(JapicmpTask).configureEach {
         addViolationTransformer(RemovedPackages, [prefixes: ['io.micronaut.caffeine'], exact: []])
     }
 }
-tasks.named("runAnnotator", RunAnnotator).configure {
-    extraOptions = ['-rboserr']
-}
+//tasks.named("runAnnotator", RunAnnotator).configure {
+//    extraOptions = ['-rboserr']
+//}
